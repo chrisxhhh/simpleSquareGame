@@ -28,6 +28,9 @@ if (!keyboard_check(vk_up) and !keyboard_check(vk_down)){
 	y_spd = lerp(y_spd,0,0.05)
 }
 
+
+
+
 //normalize the vector if exceed speed
 if (sqrt(sqr(x_spd)+sqr(y_spd))> 5){
 	
@@ -39,6 +42,37 @@ else{
 	y += y_spd
 	x += x_spd
 }
+
+//check collision with walls
+if (place_meeting(x+x_spd,y,obj_wall)){
+	var hit_wall = instance_place(x+x_spd,y,obj_wall)
+	if (x_spd>0){
+		x = hit_wall.x-hit_wall.sprite_width/2-sprite_width/2
+		x_spd = 0
+	}
+	else{
+		x = hit_wall.x+hit_wall.sprite_width/2+sprite_width/2
+		x_spd=0
+	}
+}
+if (place_meeting(x,y+y_spd,obj_wall)){
+	var hit_wall = instance_place(x,y+y_spd,obj_wall)
+	if (y_spd>0){
+		y = hit_wall.y-hit_wall.sprite_height/2-sprite_height/2
+		y_spd = 0
+	}
+	else{
+		y = hit_wall.y+hit_wall.sprite_height/2+sprite_height/2
+		y_spd=0
+	}
+}
+
+
+
+	
+	
+		
+
 
 
 //keep player inside map
